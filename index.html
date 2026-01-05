@@ -6,82 +6,97 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+:root {
+  --bg: #0d1117;
+  --card: #161b22;
+  --border: #30363d;
+  --text: #c9d1d9;
+  --muted: #8b949e;
+  --green: #2ea043;
+  --red: #f85149;
+  --blue: #1f6feb;
+}
+
+* { box-sizing: border-box; }
+
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
-  background: #f2f2f2;
+  background: var(--bg);
+  color: var(--text);
 }
 
 /* ACCOUNTS */
 .accounts {
   display: flex;
-  gap: 8px;
-  padding: 10px;
+  gap: 10px;
+  padding: 12px;
   overflow-x: auto;
 }
 
 .account {
-  min-width: 120px;
-  background: #fff;
-  border-radius: 10px;
-  padding: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,.1);
-  text-align: center;
+  min-width: 130px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
 }
 
 .account h4 {
   margin: 0;
   font-size: 13px;
+  color: var(--muted);
 }
 
 .balance {
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 600;
   margin: 6px 0;
 }
 
 .add-btn {
-  background: #4CAF50;
+  background: var(--green);
   color: white;
   border: none;
-  border-radius: 50%;
   width: 28px;
   height: 28px;
+  border-radius: 50%;
   font-size: 18px;
 }
 
-/* TRANSACTIONS */
+/* LIST */
 .list {
-  padding: 10px;
+  padding: 12px;
 }
 
 .item {
-  background: white;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
   padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+  margin-bottom: 10px;
   font-size: 13px;
 }
 
-.item.credit { border-left: 4px solid #4CAF50; }
-.item.debit  { border-left: 4px solid #f44336; }
+.item.credit { border-left: 4px solid var(--green); }
+.item.debit  { border-left: 4px solid var(--red); }
 
 .amount {
-  font-weight: bold;
   margin-top: 4px;
+  font-weight: 600;
 }
 
-/* FLOAT BUTTON */
+/* FAB */
 .fab {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #ff5722;
-  color: white;
-  border: none;
+  right: 18px;
+  bottom: 18px;
   width: 56px;
   height: 56px;
   border-radius: 50%;
+  background: var(--blue);
+  color: white;
+  border: none;
   font-size: 28px;
 }
 
@@ -90,37 +105,49 @@ body {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.5);
+  background: rgba(0,0,0,.6);
   justify-content: center;
   align-items: center;
 }
 
 .modal-box {
-  background: white;
+  background: var(--card);
+  border: 1px solid var(--border);
   width: 90%;
   padding: 16px;
-  border-radius: 12px;
+  border-radius: 14px;
+}
+
+.modal-box h3 {
+  margin-top: 0;
+  font-size: 16px;
 }
 
 input, select {
   width: 100%;
   padding: 10px;
   margin: 6px 0;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
 }
 
 .submit {
-  background: #2196F3;
+  margin-top: 10px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--blue);
   color: white;
   border: none;
-  padding: 12px;
-  width: 100%;
-  border-radius: 8px;
 }
 </style>
 </head>
 
 <body>
 
+<!-- ACCOUNTS -->
 <div class="accounts">
   <div class="account" data-name="Milk"><h4>Milk</h4><div class="balance">₹<span>0</span></div><button class="add-btn">+</button></div>
   <div class="account" data-name="Bus Fare"><h4>Bus Fare</h4><div class="balance">₹<span>0</span></div><button class="add-btn">+</button></div>
@@ -128,15 +155,18 @@ input, select {
   <div class="account" data-name="N Others"><h4>N Others</h4><div class="balance">₹<span>0</span></div><button class="add-btn">+</button></div>
 </div>
 
+<!-- TRANSACTIONS -->
 <div class="list" id="list"></div>
 
 <button class="fab">+</button>
 
+<!-- MODAL -->
 <div class="modal" id="modal">
   <div class="modal-box">
+    <h3 id="modeTitle"></h3>
     <input id="title" placeholder="Spend for">
     <input id="amount" type="number" placeholder="Amount">
-    <select id="account">
+    <select id="accountSelect">
       <option>Milk</option>
       <option>Bus Fare</option>
       <option>M Others</option>
@@ -149,36 +179,80 @@ input, select {
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyp9pRpCFQVKWXgVQKos63OIlQz2WWH8Cbsv9XI01nFH12LC6RSxEu11UXUV7fkwVRaYg/exec";
 
-const list = document.getElementById("list");
-const modal = document.getElementById("modal");
+let mode = "DEBIT";
+let activeAccount = null;
 
-document.querySelector(".fab").onclick = () => modal.style.display = "flex";
+const modal = document.getElementById("modal");
+const titleInput = document.getElementById("title");
+const amountInput = document.getElementById("amount");
+const accountSelect = document.getElementById("accountSelect");
+const modeTitle = document.getElementById("modeTitle");
+const list = document.getElementById("list");
+
+/* OPEN CREDIT */
+document.querySelectorAll(".add-btn").forEach(btn => {
+  btn.onclick = () => {
+    mode = "CREDIT";
+    activeAccount = btn.closest(".account").dataset.name;
+    modeTitle.innerText = "Add Money";
+    titleInput.style.display = "none";
+    accountSelect.style.display = "none";
+    modal.style.display = "flex";
+  };
+});
+
+/* OPEN DEBIT */
+document.querySelector(".fab").onclick = () => {
+  mode = "DEBIT";
+  activeAccount = null;
+  modeTitle.innerText = "Spend Money";
+  titleInput.style.display = "block";
+  accountSelect.style.display = "block";
+  modal.style.display = "flex";
+};
+
 modal.onclick = e => e.target === modal && (modal.style.display = "none");
 
+/* SAVE */
 document.querySelector(".submit").onclick = () => {
+  const amount = Number(amountInput.value);
+  if (!amount) return;
+
+  const account = activeAccount || accountSelect.value;
+  const description = mode === "CREDIT"
+    ? account + " amount credited"
+    : titleInput.value;
+
   fetch(SCRIPT_URL, {
     method: "POST",
     body: JSON.stringify({
-      account: account.value,
-      description: title.value,
-      amount: amount.value,
-      type: "Debit"
+      account,
+      description,
+      amount,
+      type: mode
     })
   }).then(() => location.reload());
 };
 
+/* LOAD DATA */
 fetch(SCRIPT_URL)
 .then(r => r.json())
-.then(data => {
-  data.forEach(r => {
+.then(rows => {
+  const balances = {};
+  rows.forEach(r => {
+    balances[r[2]] = (balances[r[2]] || 0) + (r[5] === "CREDIT" ? +r[4] : -r[4]);
     const div = document.createElement("div");
-    div.className = `item ${r[5].toLowerCase()}`;
+    div.className = "item " + r[5].toLowerCase();
     div.innerHTML = `
       <div>${r[0]} ${r[1]}</div>
-      <div>${r[2]} – ${r[3]}</div>
+      <div>${r[2]} — ${r[3]}</div>
       <div class="amount">₹${r[4]} (${r[5]})</div>
     `;
     list.appendChild(div);
+  });
+
+  document.querySelectorAll(".account").forEach(a => {
+    a.querySelector("span").innerText = balances[a.dataset.name] || 0;
   });
 });
 </script>
