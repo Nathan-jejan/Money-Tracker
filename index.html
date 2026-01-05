@@ -14,101 +14,58 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
 
-/* TOTAL */
 .total{
-  margin:12px;
-  padding:14px;
+  margin:12px;padding:14px;
   background:linear-gradient(135deg,#1f6feb,#2ea043);
-  border-radius:16px;
-  font-size:18px;
-  font-weight:600;
+  border-radius:16px;font-size:18px;font-weight:600;
 }
 
-/* ACCOUNTS */
 .accounts{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-  padding:12px;
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:10px;padding:12px;
 }
 .account{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:12px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:12px;
+  display:flex;justify-content:space-between;align-items:center;
 }
-.account-info h4{
-  margin:0;
-  font-size:13px;
-  color:var(--muted);
-}
+.account h4{margin:0;font-size:13px;color:var(--muted)}
 .balance{font-size:18px;font-weight:600}
 .add-btn{
-  background:var(--green);
-  border:none;
-  color:#fff;
-  width:34px;height:34px;
-  border-radius:50%;
-  font-size:20px;
+  background:var(--green);border:none;color:#fff;
+  width:34px;height:34px;border-radius:50%;font-size:20px;
 }
 
-/* FILTERS */
-.filters{
-  display:flex;
-  gap:8px;
-  padding:0 12px 12px;
-}
+.filters{display:flex;gap:8px;padding:0 12px 12px}
 select{
-  flex:1;
-  padding:10px;
-  background:var(--card);
-  color:var(--text);
-  border:1px solid var(--border);
-  border-radius:10px;
+  flex:1;padding:10px;background:var(--card);
+  color:var(--text);border:1px solid var(--border);border-radius:10px;
 }
 
-/* TRANSACTIONS */
 .list{padding:12px}
 .item{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:12px;
-  margin-bottom:10px;
-  font-size:13px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:12px;margin-bottom:10px;font-size:13px;
 }
 .item.credit{border-left:4px solid var(--green)}
 .item.debit{border-left:4px solid var(--red)}
 .row{display:flex;justify-content:space-between;color:var(--muted)}
 .amount{font-weight:700;margin-top:6px}
 
-/* FAB */
 .fab{
-  position:fixed;
-  right:18px;bottom:18px;
-  width:56px;height:56px;
-  border-radius:50%;
-  background:var(--blue);
-  color:#fff;
-  border:none;
-  font-size:28px;
+  position:fixed;right:18px;bottom:18px;
+  width:56px;height:56px;border-radius:50%;
+  background:var(--blue);color:#fff;border:none;font-size:28px;
 }
 
-/* MODAL */
 .modal{
   display:none;position:fixed;inset:0;
   background:rgba(0,0,0,.6);
   justify-content:center;align-items:center;
 }
 .modal-box{
-  background:var(--card);
-  width:90%;
-  padding:18px;
-  border-radius:16px;
-  border:1px solid var(--border);
+  background:var(--card);width:90%;
+  padding:18px;border-radius:16px;border:1px solid var(--border);
 }
 input{
   width:100%;padding:12px;margin-top:10px;
@@ -116,10 +73,8 @@ input{
   border:1px solid var(--border);border-radius:10px;
 }
 .submit{
-  width:100%;margin-top:14px;
-  padding:14px;border:none;
-  border-radius:12px;
-  background:var(--blue);color:#fff;
+  width:100%;margin-top:14px;padding:14px;
+  border:none;border-radius:12px;background:var(--blue);color:#fff;
 }
 </style>
 </head>
@@ -130,19 +85,19 @@ input{
 
 <div class="accounts">
   <div class="account" data-name="Milk">
-    <div class="account-info"><h4>Milk</h4><div class="balance">₹<span>0</span></div></div>
+    <div><h4>Milk</h4><div class="balance">₹<span>0</span></div></div>
     <button class="add-btn">+</button>
   </div>
   <div class="account" data-name="Bus Fare">
-    <div class="account-info"><h4>Bus Fare</h4><div class="balance">₹<span>0</span></div></div>
+    <div><h4>Bus Fare</h4><div class="balance">₹<span>0</span></div></div>
     <button class="add-btn">+</button>
   </div>
   <div class="account" data-name="M Others">
-    <div class="account-info"><h4>M Others</h4><div class="balance">₹<span>0</span></div></div>
+    <div><h4>M Others</h4><div class="balance">₹<span>0</span></div></div>
     <button class="add-btn">+</button>
   </div>
   <div class="account" data-name="N Others">
-    <div class="account-info"><h4>N Others</h4><div class="balance">₹<span>0</span></div></div>
+    <div><h4>N Others</h4><div class="balance">₹<span>0</span></div></div>
     <button class="add-btn">+</button>
   </div>
 </div>
@@ -150,10 +105,8 @@ input{
 <div class="filters">
   <select id="filterAccount">
     <option value="ALL">All Accounts</option>
-    <option>Milk</option>
-    <option>Bus Fare</option>
-    <option>M Others</option>
-    <option>N Others</option>
+    <option>Milk</option><option>Bus Fare</option>
+    <option>M Others</option><option>N Others</option>
   </select>
   <select id="filterDay">
     <option value="ALL">All Days</option>
@@ -162,7 +115,6 @@ input{
 </div>
 
 <div class="list" id="list"></div>
-
 <button class="fab">+</button>
 
 <div class="modal" id="modal">
@@ -171,65 +123,71 @@ input{
     <input id="title" placeholder="Spend for">
     <input id="amount" type="number" placeholder="Amount">
     <select id="accountSelect">
-      <option>Milk</option>
-      <option>Bus Fare</option>
-      <option>M Others</option>
-      <option>N Others</option>
+      <option>Milk</option><option>Bus Fare</option>
+      <option>M Others</option><option>N Others</option>
     </select>
     <button class="submit">Save</button>
   </div>
 </div>
 
 <script>
-const SCRIPT_URL="YOUR_SCRIPT_URL_HERE";
-let rows=[],mode="DEBIT",activeAccount=null;
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbyp9pRpCFQVKWXgVQKos63OIlQz2WWH8Cbsv9XI01nFH12LC6RSxEu11UXUV7fkwVRaYg/exec";
 
 const modal=document.getElementById("modal");
+const titleInput=document.getElementById("title");
+const amountInput=document.getElementById("amount");
+const accountSelect=document.getElementById("accountSelect");
+const modeTitle=document.getElementById("modeTitle");
 const list=document.getElementById("list");
+const totalEl=document.getElementById("total");
+const filterAccount=document.getElementById("filterAccount");
+const filterDay=document.getElementById("filterDay");
+
+let rows=[],mode="DEBIT",activeAccount=null;
 
 document.querySelectorAll(".add-btn").forEach(b=>{
   b.onclick=()=>{
     mode="CREDIT";
     activeAccount=b.closest(".account").dataset.name;
-    title.style.display="none";
-    accountSelect.style.display="none";
     modeTitle.innerText="Add Money";
+    titleInput.style.display="none";
+    accountSelect.style.display="none";
     modal.style.display="flex";
-  }
+  };
 });
 
 document.querySelector(".fab").onclick=()=>{
   mode="DEBIT";activeAccount=null;
-  title.style.display="block";
-  accountSelect.style.display="block";
   modeTitle.innerText="Spend Money";
+  titleInput.style.display="block";
+  accountSelect.style.display="block";
   modal.style.display="flex";
 };
 
 modal.onclick=e=>e.target===modal&&(modal.style.display="none");
 
 document.querySelector(".submit").onclick=()=>{
+  if(!amountInput.value)return;
   fetch(SCRIPT_URL,{
     method:"POST",
+    headers:{ "Content-Type":"application/json" },
     body:JSON.stringify({
       account:activeAccount||accountSelect.value,
-      description:mode==="CREDIT"?"Amount Credited":title.value,
-      amount:+amount.value,
+      description:mode==="CREDIT"?"Amount Credited":titleInput.value,
+      amount:Number(amountInput.value),
       type:mode
     })
-  }).then(loadData);
-  modal.style.display="none";
+  }).then(()=>{modal.style.display="none";loadData();});
+  titleInput.value="";amountInput.value="";
 };
 
 function render(){
-  list.innerHTML="";
-  let balances={},total=0;
-  const fa=filterAccount.value,fd=filterDay.value;
+  list.innerHTML="";let balances={},total=0;
   const today=new Date().toLocaleDateString();
 
   rows.forEach(r=>{
-    if(fa!=="ALL"&&r[2]!==fa)return;
-    if(fd==="TODAY"&&r[0]!==today)return;
+    if(filterAccount.value!=="ALL"&&r[2]!==filterAccount.value)return;
+    if(filterDay.value==="TODAY"&&r[0]!==today)return;
 
     balances[r[2]]=(balances[r[2]]||0)+(r[5]==="CREDIT"?+r[4]:-r[4]);
     total+=r[5]==="CREDIT"?+r[4]:-r[4];
@@ -245,11 +203,11 @@ function render(){
   document.querySelectorAll(".account").forEach(a=>{
     a.querySelector("span").innerText=balances[a.dataset.name]||0;
   });
-  document.getElementById("total").innerText=total;
+  totalEl.innerText=total;
 }
 
 function loadData(){
-  fetch(SCRIPT_URL).then(r=>r.json()).then(d=>{rows=d;render()});
+  fetch(SCRIPT_URL).then(r=>r.json()).then(d=>{rows=d;render();});
 }
 filterAccount.onchange=filterDay.onchange=render;
 loadData();
