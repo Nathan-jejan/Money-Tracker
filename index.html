@@ -6,179 +6,165 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root {
-  --bg: #0d1117;
-  --card: #161b22;
-  --border: #30363d;
-  --text: #c9d1d9;
-  --muted: #8b949e;
-  --green: #2ea043;
-  --red: #f85149;
-  --blue: #1f6feb;
+:root{
+  --bg:#0d1117;--card:#161b22;--border:#30363d;
+  --text:#c9d1d9;--muted:#8b949e;
+  --green:#2ea043;--red:#f85149;--blue:#1f6feb;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
+
+/* TOTAL */
+.total{
+  margin:12px;
+  padding:14px;
+  background:linear-gradient(135deg,#1f6feb,#2ea043);
+  border-radius:16px;
+  font-size:18px;
+  font-weight:600;
 }
 
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
+/* ACCOUNTS */
+.accounts{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  padding:12px;
+}
+.account{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.account-info h4{
+  margin:0;
+  font-size:13px;
+  color:var(--muted);
+}
+.balance{font-size:18px;font-weight:600}
+.add-btn{
+  background:var(--green);
+  border:none;
+  color:#fff;
+  width:34px;height:34px;
+  border-radius:50%;
+  font-size:20px;
 }
 
-/* ACCOUNTS GRID */
-.accounts {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  padding: 12px;
+/* FILTERS */
+.filters{
+  display:flex;
+  gap:8px;
+  padding:0 12px 12px;
 }
-
-.account {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 12px;
-}
-
-.account h4 {
-  margin: 0;
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.balance {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 8px 0;
-}
-
-.add-btn {
-  background: var(--green);
-  color: white;
-  border: none;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  font-size: 18px;
+select{
+  flex:1;
+  padding:10px;
+  background:var(--card);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:10px;
 }
 
 /* TRANSACTIONS */
-.list {
-  padding: 12px;
+.list{padding:12px}
+.item{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:12px;
+  margin-bottom:10px;
+  font-size:13px;
 }
+.item.credit{border-left:4px solid var(--green)}
+.item.debit{border-left:4px solid var(--red)}
+.row{display:flex;justify-content:space-between;color:var(--muted)}
+.amount{font-weight:700;margin-top:6px}
 
-.item {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 12px;
-  margin-bottom: 10px;
-  font-size: 13px;
-}
-
-.item.credit { border-left: 4px solid var(--green); }
-.item.debit  { border-left: 4px solid var(--red); }
-
-.amount {
-  margin-top: 6px;
-  font-weight: 600;
-}
-
-/* FLOAT BUTTON */
-.fab {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--blue);
-  color: white;
-  border: none;
-  font-size: 28px;
+/* FAB */
+.fab{
+  position:fixed;
+  right:18px;bottom:18px;
+  width:56px;height:56px;
+  border-radius:50%;
+  background:var(--blue);
+  color:#fff;
+  border:none;
+  font-size:28px;
 }
 
 /* MODAL */
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.6);
-  justify-content: center;
-  align-items: center;
+.modal{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.6);
+  justify-content:center;align-items:center;
 }
-
-.modal-box {
-  background: var(--card);
-  border: 1px solid var(--border);
-  width: 90%;
-  padding: 18px;
-  border-radius: 16px;
+.modal-box{
+  background:var(--card);
+  width:90%;
+  padding:18px;
+  border-radius:16px;
+  border:1px solid var(--border);
 }
-
-.modal-box h3 {
-  margin-top: 0;
-  font-size: 16px;
+input{
+  width:100%;padding:12px;margin-top:10px;
+  background:var(--bg);color:var(--text);
+  border:1px solid var(--border);border-radius:10px;
 }
-
-input, select {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  background: var(--bg);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-}
-
-.submit {
-  margin-top: 12px;
-  width: 100%;
-  padding: 14px;
-  border-radius: 12px;
-  background: var(--blue);
-  color: white;
-  border: none;
+.submit{
+  width:100%;margin-top:14px;
+  padding:14px;border:none;
+  border-radius:12px;
+  background:var(--blue);color:#fff;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ACCOUNTS -->
+<div class="total">Total Balance: ₹<span id="total">0</span></div>
+
 <div class="accounts">
   <div class="account" data-name="Milk">
-    <h4>Milk</h4>
-    <div class="balance">₹<span>0</span></div>
+    <div class="account-info"><h4>Milk</h4><div class="balance">₹<span>0</span></div></div>
     <button class="add-btn">+</button>
   </div>
-
   <div class="account" data-name="Bus Fare">
-    <h4>Bus Fare</h4>
-    <div class="balance">₹<span>0</span></div>
+    <div class="account-info"><h4>Bus Fare</h4><div class="balance">₹<span>0</span></div></div>
     <button class="add-btn">+</button>
   </div>
-
   <div class="account" data-name="M Others">
-    <h4>M Others</h4>
-    <div class="balance">₹<span>0</span></div>
+    <div class="account-info"><h4>M Others</h4><div class="balance">₹<span>0</span></div></div>
     <button class="add-btn">+</button>
   </div>
-
   <div class="account" data-name="N Others">
-    <h4>N Others</h4>
-    <div class="balance">₹<span>0</span></div>
+    <div class="account-info"><h4>N Others</h4><div class="balance">₹<span>0</span></div></div>
     <button class="add-btn">+</button>
   </div>
 </div>
 
-<!-- TRANSACTIONS -->
+<div class="filters">
+  <select id="filterAccount">
+    <option value="ALL">All Accounts</option>
+    <option>Milk</option>
+    <option>Bus Fare</option>
+    <option>M Others</option>
+    <option>N Others</option>
+  </select>
+  <select id="filterDay">
+    <option value="ALL">All Days</option>
+    <option value="TODAY">Today</option>
+  </select>
+</div>
+
 <div class="list" id="list"></div>
 
 <button class="fab">+</button>
 
-<!-- MODAL -->
 <div class="modal" id="modal">
   <div class="modal-box">
     <h3 id="modeTitle"></h3>
@@ -195,84 +181,78 @@ input, select {
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyp9pRpCFQVKWXgVQKos63OIlQz2WWH8Cbsv9XI01nFH12LC6RSxEu11UXUV7fkwVRaYg/exec";
+const SCRIPT_URL="YOUR_SCRIPT_URL_HERE";
+let rows=[],mode="DEBIT",activeAccount=null;
 
-let mode = "DEBIT";
-let activeAccount = null;
+const modal=document.getElementById("modal");
+const list=document.getElementById("list");
 
-const modal = document.getElementById("modal");
-const titleInput = document.getElementById("title");
-const amountInput = document.getElementById("amount");
-const accountSelect = document.getElementById("accountSelect");
-const modeTitle = document.getElementById("modeTitle");
-const list = document.getElementById("list");
-
-/* CREDIT */
-document.querySelectorAll(".add-btn").forEach(btn => {
-  btn.onclick = () => {
-    mode = "CREDIT";
-    activeAccount = btn.closest(".account").dataset.name;
-    modeTitle.innerText = "Add Money";
-    titleInput.style.display = "none";
-    accountSelect.style.display = "none";
-    modal.style.display = "flex";
-  };
+document.querySelectorAll(".add-btn").forEach(b=>{
+  b.onclick=()=>{
+    mode="CREDIT";
+    activeAccount=b.closest(".account").dataset.name;
+    title.style.display="none";
+    accountSelect.style.display="none";
+    modeTitle.innerText="Add Money";
+    modal.style.display="flex";
+  }
 });
 
-/* DEBIT */
-document.querySelector(".fab").onclick = () => {
-  mode = "DEBIT";
-  activeAccount = null;
-  modeTitle.innerText = "Spend Money";
-  titleInput.style.display = "block";
-  accountSelect.style.display = "block";
-  modal.style.display = "flex";
+document.querySelector(".fab").onclick=()=>{
+  mode="DEBIT";activeAccount=null;
+  title.style.display="block";
+  accountSelect.style.display="block";
+  modeTitle.innerText="Spend Money";
+  modal.style.display="flex";
 };
 
-modal.onclick = e => e.target === modal && (modal.style.display = "none");
+modal.onclick=e=>e.target===modal&&(modal.style.display="none");
 
-/* SAVE */
-document.querySelector(".submit").onclick = () => {
-  const amount = Number(amountInput.value);
-  if (!amount) return;
-
-  const account = activeAccount || accountSelect.value;
-  const description = mode === "CREDIT"
-    ? account + " amount credited"
-    : titleInput.value;
-
-  fetch(SCRIPT_URL, {
-    method: "POST",
-    body: JSON.stringify({
-      account,
-      description,
-      amount,
-      type: mode
+document.querySelector(".submit").onclick=()=>{
+  fetch(SCRIPT_URL,{
+    method:"POST",
+    body:JSON.stringify({
+      account:activeAccount||accountSelect.value,
+      description:mode==="CREDIT"?"Amount Credited":title.value,
+      amount:+amount.value,
+      type:mode
     })
-  }).then(() => location.reload());
+  }).then(loadData);
+  modal.style.display="none";
 };
 
-/* LOAD DATA */
-fetch(SCRIPT_URL)
-.then(r => r.json())
-.then(rows => {
-  const balances = {};
-  rows.forEach(r => {
-    balances[r[2]] = (balances[r[2]] || 0) + (r[5] === "CREDIT" ? +r[4] : -r[4]);
-    const div = document.createElement("div");
-    div.className = "item " + r[5].toLowerCase();
-    div.innerHTML = `
-      <div>${r[0]} ${r[1]}</div>
-      <div>${r[2]} — ${r[3]}</div>
-      <div class="amount">₹${r[4]} (${r[5]})</div>
-    `;
-    list.appendChild(div);
+function render(){
+  list.innerHTML="";
+  let balances={},total=0;
+  const fa=filterAccount.value,fd=filterDay.value;
+  const today=new Date().toLocaleDateString();
+
+  rows.forEach(r=>{
+    if(fa!=="ALL"&&r[2]!==fa)return;
+    if(fd==="TODAY"&&r[0]!==today)return;
+
+    balances[r[2]]=(balances[r[2]]||0)+(r[5]==="CREDIT"?+r[4]:-r[4]);
+    total+=r[5]==="CREDIT"?+r[4]:-r[4];
+
+    list.innerHTML+=`
+      <div class="item ${r[5].toLowerCase()}">
+        <div class="row"><span>${r[0]}</span><span>${r[1]}</span></div>
+        <div>${r[3]} • ${r[2]}</div>
+        <div class="amount">₹${r[4]}</div>
+      </div>`;
   });
 
-  document.querySelectorAll(".account").forEach(a => {
-    a.querySelector("span").innerText = balances[a.dataset.name] || 0;
+  document.querySelectorAll(".account").forEach(a=>{
+    a.querySelector("span").innerText=balances[a.dataset.name]||0;
   });
-});
+  document.getElementById("total").innerText=total;
+}
+
+function loadData(){
+  fetch(SCRIPT_URL).then(r=>r.json()).then(d=>{rows=d;render()});
+}
+filterAccount.onchange=filterDay.onchange=render;
+loadData();
 </script>
 
 </body>
