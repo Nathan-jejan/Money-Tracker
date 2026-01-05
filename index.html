@@ -26,20 +26,19 @@ body {
   color: var(--text);
 }
 
-/* ACCOUNTS */
+/* ACCOUNTS GRID */
 .accounts {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   padding: 12px;
-  overflow-x: auto;
 }
 
 .account {
-  min-width: 130px;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 10px;
+  border-radius: 14px;
+  padding: 12px;
 }
 
 .account h4 {
@@ -51,20 +50,20 @@ body {
 .balance {
   font-size: 18px;
   font-weight: 600;
-  margin: 6px 0;
+  margin: 8px 0;
 }
 
 .add-btn {
   background: var(--green);
   color: white;
   border: none;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   font-size: 18px;
 }
 
-/* LIST */
+/* TRANSACTIONS */
 .list {
   padding: 12px;
 }
@@ -72,8 +71,8 @@ body {
 .item {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 10px;
+  border-radius: 14px;
+  padding: 12px;
   margin-bottom: 10px;
   font-size: 13px;
 }
@@ -82,11 +81,11 @@ body {
 .item.debit  { border-left: 4px solid var(--red); }
 
 .amount {
-  margin-top: 4px;
+  margin-top: 6px;
   font-weight: 600;
 }
 
-/* FAB */
+/* FLOAT BUTTON */
 .fab {
   position: fixed;
   right: 18px;
@@ -114,8 +113,8 @@ body {
   background: var(--card);
   border: 1px solid var(--border);
   width: 90%;
-  padding: 16px;
-  border-radius: 14px;
+  padding: 18px;
+  border-radius: 16px;
 }
 
 .modal-box h3 {
@@ -125,19 +124,19 @@ body {
 
 input, select {
   width: 100%;
-  padding: 10px;
-  margin: 6px 0;
+  padding: 12px;
+  margin: 8px 0;
   background: var(--bg);
   color: var(--text);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
 .submit {
-  margin-top: 10px;
+  margin-top: 12px;
   width: 100%;
-  padding: 12px;
-  border-radius: 10px;
+  padding: 14px;
+  border-radius: 12px;
   background: var(--blue);
   color: white;
   border: none;
@@ -149,10 +148,29 @@ input, select {
 
 <!-- ACCOUNTS -->
 <div class="accounts">
-  <div class="account" data-name="Milk"><h4>Milk</h4><div class="balance">₹<span>0</span></div><button class="add-btn">+</button></div>
-  <div class="account" data-name="Bus Fare"><h4>Bus Fare</h4><div class="balance">₹<span>0</span></div><button class="add-btn">+</button></div>
-  <div class="account" data-name="M Others"><h4>M Others</h4><div class="balance">₹<span>0</span></div><button class="add-btn">+</button></div>
-  <div class="account" data-name="N Others"><h4>N Others</h4><div class="balance">₹<span>0</span></div><button class="add-btn">+</button></div>
+  <div class="account" data-name="Milk">
+    <h4>Milk</h4>
+    <div class="balance">₹<span>0</span></div>
+    <button class="add-btn">+</button>
+  </div>
+
+  <div class="account" data-name="Bus Fare">
+    <h4>Bus Fare</h4>
+    <div class="balance">₹<span>0</span></div>
+    <button class="add-btn">+</button>
+  </div>
+
+  <div class="account" data-name="M Others">
+    <h4>M Others</h4>
+    <div class="balance">₹<span>0</span></div>
+    <button class="add-btn">+</button>
+  </div>
+
+  <div class="account" data-name="N Others">
+    <h4>N Others</h4>
+    <div class="balance">₹<span>0</span></div>
+    <button class="add-btn">+</button>
+  </div>
 </div>
 
 <!-- TRANSACTIONS -->
@@ -189,7 +207,7 @@ const accountSelect = document.getElementById("accountSelect");
 const modeTitle = document.getElementById("modeTitle");
 const list = document.getElementById("list");
 
-/* OPEN CREDIT */
+/* CREDIT */
 document.querySelectorAll(".add-btn").forEach(btn => {
   btn.onclick = () => {
     mode = "CREDIT";
@@ -201,7 +219,7 @@ document.querySelectorAll(".add-btn").forEach(btn => {
   };
 });
 
-/* OPEN DEBIT */
+/* DEBIT */
 document.querySelector(".fab").onclick = () => {
   mode = "DEBIT";
   activeAccount = null;
